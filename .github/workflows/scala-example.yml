@@ -1,0 +1,19 @@
+name: valet-travis-languages-testing/scala-example
+on:
+  workflow_dispatch:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+    - name: checkout
+      uses: actions/checkout@v2
+    - uses: olafurpg/setup-scala@v10
+    - run: sbt -jvm-opts travis/jvmopts.compile ... compile
+    - run: sbt -jvm-opts travis/jvmopts.test ... test
+    strategy:
+      matrix:
+        scala:
+        - 2.9.3
+        - 2.10.6
+        - 2.11.11
+        - 2.12.2
